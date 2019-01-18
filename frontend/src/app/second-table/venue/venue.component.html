@@ -1,0 +1,32 @@
+<table class="table table-striped">
+  <tbody>
+    <tr *ngIf="venueObj[0]['name']" class="text-center">
+      <th colspan="2">{{venueObj[0]['name']}}</th>
+    </tr>
+    <tr *ngIf="venueObj[0]['address']">
+      <th scope="row">Address</th>
+      <td>{{venueObj[0]['address']}}</td>
+    </tr>
+    <tr *ngIf="venueObj[0]['city']">
+      <th scope="row">City</th>
+      <td>{{venueObj[0]['city']}},{{venueObj[0]['state']}}</td>
+    </tr>
+    <tr *ngIf="venueObj[0]['phoneNumber']">
+      <th scope="row">Phone Number</th>
+      <td>{{venueObj[0]['phoneNumber']}}</td>
+    </tr>
+    <tr *ngIf="venueObj[0]['openHours']">
+      <th scope="row">Open Hours</th>
+      <td>{{venueObj[0]['openHours']}}</td>
+    </tr>
+    <tr *ngIf="venueObj[0]['generalRule']">
+      <th scope="row">General Rule</th>
+      <td>{{venueObj[0]['generalRule']}}</td>
+    </tr>
+    <tr *ngIf="venueObj[0]['childRule']">
+      <th scope="row">Child Rule</th>
+      <td>{{venueObj[0]['childRule']}}</td>
+    </tr>
+  </tbody>
+</table>
+<div id="map"></div>

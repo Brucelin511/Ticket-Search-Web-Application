@@ -1,0 +1,98 @@
+<select class="custom-select col-lg-2 col-md-2 col-sm-3 col-xs-12" (change)="sort(index, mode)" [(ngModel)]="index">
+  <option value=0 >Default</option>
+  <option value=1 >Event Name</option>
+  <option value=2 >Time</option>
+  <option value=3 selected >Artist</option>
+  <option value=4 >Type</option>
+</select>
+<select class="custom-select col-lg-2 col-md-2 col-sm-3 col-xs-12" (change)="sort(index, mode)" [(ngModel)]="mode" [disabled]="index == 0">
+  <option selected value=0 >Ascending</option>
+  <option value=1 >Descending</option>
+</select>
+
+
+<div *ngIf="index == 0">
+  <div *ngFor="let eachElement of upComingEventsObj; let i = index;">
+
+    <div *ngIf="i < 5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-primary"><a href="{{eachElement['url']}}" target="_blank">{{eachElement['title']}}</a></h5>
+          <p class="card-text">
+            <span class="text-warning">{{eachElement['artist']}} </span>
+            <span class="text-secondary">
+              <span *ngIf="eachElement['date'] && eachElement['time']">{{eachElement['date'] | date}}, {{eachElement['time']}}</span>
+              <span *ngIf="eachElement['date'] && !eachElement['time']">{{eachElement['date'] | date}}</span>
+              <span *ngIf="eachElement['date'] && !eachElement['time']">{{eachElement['time']}}</span>
+            </span>
+          </p>
+          <p class="card-text">Type: {{eachElement['type']}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showState == 1 && i >= 5" [@fadeInOut]>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-primary"><a href="{{eachElement['url']}}" target="_blank">{{eachElement['title']}}</a></h5>
+          <p class="card-text">
+            <span class="text-warning">{{eachElement['artist']}} </span>
+            <span class="text-secondary">
+              <span *ngIf="eachElement['date'] && eachElement['time']">{{eachElement['date'] | date}}, {{eachElement['time']}}</span>
+              <span *ngIf="eachElement['date'] && !eachElement['time']">{{eachElement['date'] | date}}</span>
+              <span *ngIf="eachElement['date'] && !eachElement['time']">{{eachElement['time']}}</span>
+            </span>
+          </p>
+          <p class="card-text">Type: {{eachElement['type']}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="index != 0">
+  <div *ngFor="let eachElement of sortedUpComingEventsObj; let i = index;">
+    <div *ngIf="i < 5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-primary"><a href="{{eachElement['url']}}" target="_blank">{{eachElement['title']}}</a></h5>
+          <p class="card-text">
+            <span class="text-warning">{{eachElement['artist']}} </span>
+            <span class="text-secondary">
+              <span *ngIf="eachElement['date'] && eachElement['time']">{{eachElement['date'] | date}}, {{eachElement['time']}}</span>
+              <span *ngIf="eachElement['date'] && !eachElement['time']">{{eachElement['date'] | date}}</span>
+              <span *ngIf="eachElement['date'] && !eachElement['time']">{{eachElement['time']}}</span>
+            </span>
+          </p>
+          <p class="card-text">Type: {{eachElement['type']}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showState == 1 && i >= 5" [@fadeInOut]>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-primary"><a href="{{eachElement['url']}}" target="_blank">{{eachElement['title']}}</a></h5>
+          <p class="card-text">
+            <span class="text-warning">{{eachElement['artist']}} </span>
+            <span class="text-secondary">
+              <span *ngIf="eachElement['date'] && eachElement['time']">{{eachElement['date']}}, {{eachElement['time']}}</span>
+              <span *ngIf="eachElement['date'] && !eachElement['time']">{{eachElement['date'] | date}}</span>
+              <span *ngIf="eachElement['date'] && !eachElement['time']">{{eachElement['time']}}</span>
+            </span>
+          </p>
+          <p class="card-text">Type: {{eachElement['type'] | date}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="showState == 0" class="container text-center mb-2">
+  <button type="button" class="btn btn-primary" (click)="changeState()">Show More</button>
+</div>
+<div *ngIf="showState == 1" class="container text-center mb-2">
+  <button type="button" class="btn btn-primary" (click)="changeState()">Show Less</button>
+</div>

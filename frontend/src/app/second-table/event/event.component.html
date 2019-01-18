@@ -1,0 +1,134 @@
+<table class="table table-striped">
+  <tbody>
+
+
+<!-- artist and teams -->
+<!--     case1: there are 2 artist and teams -->
+    <tr *ngIf="eventDetailObject[0]['Artist/Teams(s)']['artistTeamObj']">
+      <th scope="row">Artist/Teams(s)</th>
+      <td>
+        <span *ngFor="let element of eventDetailObject[0]['Artist/Teams(s)']['artistTeamObj']; let i = index; let p = count">
+          <span *ngIf="i < p - 1">{{eventDetailObject[0]['Artist/Teams(s)']['artistTeamObj'][i]['name']}} | </span>
+          <span *ngIf="i == p - 1">{{eventDetailObject[0]['Artist/Teams(s)']['artistTeamObj'][i]['name']}}</span>
+        </span>
+      </td>
+    </tr>
+
+<!-- venue -->
+    <tr *ngIf="eventDetailObject[0]['Venue']['venueObj']">
+      <th scope="row">Venue</th>
+      <td>{{eventDetailObject[0]['Venue']['venueObj']}}</td>
+    </tr>
+
+
+
+<!--localData, localTime -->
+<!--     case1: localData, localTime -->
+    <tr *ngIf="eventDetailObject[0]['Time']['localDataObj'] && eventDetailObject[0]['Time']['localTimeObj']">
+      <th scope="row">Time</th>
+       <td>{{ eventDetailObject[0]['Time']['localDataObj'] | date }}, {{eventDetailObject[0]['Time']['localTimeObj']}}</td>
+<!--       <td>{{eventDetailObject[0]['Time']['localDataObj']}}, {{eventDetailObject[0]['Time']['localTimeObj']}}</td> -->
+    </tr>
+<!--     case2: localData -->
+    <tr *ngIf="eventDetailObject[0]['Time']['localDataObj'] && !eventDetailObject[0]['Time']['localTimeObj']">
+      <th scope="row">Time</th>
+      <td>{{eventDetailObject[0]['Time']['localDataObj']}}</td>
+    </tr>
+<!--     case3: localTime -->
+    <tr *ngIf="!eventDetailObject[0]['Time']['localDataObj'] && eventDetailObject[0]['Time']['localTimeObj']">
+      <th scope="row">Time</th>
+      <td>{{eventDetailObject[0]['Time']['localTimeObj']}}</td>
+    </tr>
+
+
+
+
+
+
+
+<!-- Category -->
+<!-- case1: genreObj && segmentObj -->
+    <tr *ngIf="eventDetailObject[0]['Category']['genreObj'] && eventDetailObject[0]['Category']['segmentObj']">
+      <th scope="row">Category</th>
+      <td>{{eventDetailObject[0]['Category']['genreObj']}} | {{eventDetailObject[0]['Category']['segmentObj']}}</td>
+    </tr>
+<!-- case2: genreObj && !segmentObj -->
+    <tr *ngIf="eventDetailObject[0]['Category']['genreObj'] && !eventDetailObject[0]['Category']['segmentObj']">
+      <th scope="row">Category</th>
+      <td>{{eventDetailObject[0]['Category']['genreObj']}}</td>
+    </tr>
+<!-- case3: !genreObj && segmentObj -->
+    <tr *ngIf="!eventDetailObject[0]['Category']['genreObj'] && eventDetailObject[0]['Category']['segmentObj']">
+      <th scope="row">Category</th>
+      <td>{{eventDetailObject[0]['Category']['segmentObj']}}</td>
+    </tr>
+
+
+
+
+
+
+<!--     case1: priceCurrencyObj, priceMinObj, priceMaxObj -->
+    <tr *ngIf="eventDetailObject[0]['Price Range']['priceMinObj'] && eventDetailObject[0]['Price Range']['priceMaxObj']">
+      <th scope="row">Price Range</th>
+      <td>{{eventDetailObject[0]['Price Range']['priceMinObj'] | currency:'USD':true:'1.2-2'}} ~ {{eventDetailObject[0]['Price Range']['priceMaxObj'] | currency:'USD':true:'1.2-2'}}</td>
+<!--       <td>{{eventDetailObject[0]['Price Range']['priceCurrencyObj']}}{{eventDetailObject[0]['Price Range']['priceMinObj']}} ~ {{eventDetailObject[0]['Price Range']['priceCurrencyObj']}}{{eventDetailObject[0]['Price Range']['priceMaxObj']}}</td> -->
+    </tr>
+<!--     case2: priceCurrencyObj, priceMinObj, priceMaxObj -->
+    <tr *ngIf="eventDetailObject[0]['Price Range']['priceMinObj'] && !eventDetailObject[0]['Price Range']['priceMaxObj']">
+      <th scope="row">Price Range</th>
+      <td>{{eventDetailObject[0]['Price Range']['priceCurrencyObj']}}{{eventDetailObject[0]['Price Range']['priceMinObj']}}</td>
+    </tr>
+<!--     case3: priceCurrencyObj, priceMaxObj -->
+    <tr *ngIf="!eventDetailObject[0]['Price Range']['priceMinObj'] && eventDetailObject[0]['Price Range']['priceMaxObj']">
+      <th scope="row">Price Range</th>
+      <td>{{eventDetailObject[0]['Price Range']['priceCurrencyObj']}}{{eventDetailObject[0]['Price Range']['priceMaxObj']}}</td>
+    </tr>
+
+    <tr *ngIf="eventDetailObject[0]['Ticket Status']['statusObj']">
+      <th scope="row">Ticket Status</th>
+      <td>{{eventDetailObject[0]['Ticket Status']['statusObj']}}</td>
+    </tr>
+
+    <tr *ngIf="eventDetailObject[0]['Buy Ticket At']['buyTicketAtObject']">
+      <th scope="row">Buy Ticket At</th>
+      <td><a href="{{eventDetailObject[0]['Buy Ticket At']['buyTicketAtObject']}}" target="_blank">Ticketmaster</a></td>
+    </tr>
+
+
+<!--     <tr *ngIf="eventDetailObject[0]['Seat Map']['seatMapObject']">
+      <th scope="row">SeatMap</th>
+      <td><a href="{{eventDetailObject[0]['Seat Map']['seatMapObject']}}" target="_blank">View Seat Map Here</a></td>
+    </tr> -->
+
+
+    <tr *ngIf="eventDetailObject[0]['Seat Map']['seatMapObject']">
+      <th scope="row">SeatMap</th>
+      <td><a href="{{eventDetailObject[0]['Seat Map']['seatMapObject']}}" target="_blank" data-toggle="modal" data-target="#myModal">View Seat Map Here</a></td>
+    </tr>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body">
+            <a href="{{eventDetailObject[0]['Seat Map']['seatMapObject']}}" target="_blank">
+              <img src="{{eventDetailObject[0]['Seat Map']['seatMapObject']}}" width="100%">
+            </a>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+<!--     <tr *ngIf="eventDetailObject[0]['Seat Map']['seatMapObject']">
+      <th scope="row">SeatMap</th>
+      <td><img ng-src="{{eventDetailObject[0]['Seat Map']['seatMapObject']}}">View Seat Map Here</td>
+    </tr> -->
+  </tbody>
+</table>

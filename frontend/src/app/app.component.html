@@ -1,0 +1,65 @@
+<!-- form -->
+<div class="container jumbotron py-0 mt-5" style="background-color: rgb(248,247,249)">
+  <app-form (autoCompleteEvent)="autoComplete($event)"
+            (formSubmittedEvent)="createTableAfterformSubmitted($event)"
+  		      (resetEvent)="clear()"
+            [autoCompleteAttractionArr]="refinedAutoCompleteAttractionArrObj"
+  ></app-form>
+</div>
+
+<!-- Result and Favorite-->
+<div class="container rounded w-75 mt-3 d-flex justify-content-center"> 
+    <!-- //blue -->
+    <button *ngIf="!(isFavorite || shiftMode == 1)" type="button" class="btn btn-primary mr-3 border" style="width:100px"(click)="favorite(0)"><span>Result</span></button>
+    <!-- //white -->
+    <button *ngIf="isFavorite || shiftMode == 1" type="button" class="btn btn-light bg-white mr-3" style="width:100px"(click)="favorite(0)"><span class="text-primary">Result</span></button>
+
+    <!-- //white -->
+    <button *ngIf="!(isFavorite || shiftMode == 1)" type="button" class="btn btn-light bg-white" style="width:100px" (click)="favorite(1)"><span class="text-primary">Favorite</span></button> 
+    <!-- //blue -->
+    <button *ngIf="isFavorite || shiftMode == 1" type="button" class="btn btn-primary mr-3 border" style="width:100px" (click)="favorite(1)"><span>Favorite</span></button>
+    
+</div>
+
+
+<!-- Return to the detail button -->
+<!-- <div *ngIf="!isClear && (isShowFirstTable && refinedeventListJsonObjetAfterSubmit || isFavorite)" class="container rounded w-75 mt-5 d-flex justify-content-end">
+	<button type="button" class="rounded btn btn-light" (click)="clickToReturnSecondTalbeEvent($event)" [disabled]="!isSecondTableClicked">Details ></button>
+</div> -->
+
+<!-- progress-bar for first table-->
+<div class="container rounded mt-5" *ngIf="refinedeventListJsonObjetAfterSubmit && seconds == 0 && isShowFirstTable">
+  <app-progress-bar></app-progress-bar>
+</div>
+<!-- no record-->
+<div class="container rounded mt-5" *ngIf="refinedeventListJsonObjetAfterSubmit  && seconds > 0 && refinedeventListJsonObjetAfterSubmit.length == 0">
+  <app-no-record></app-no-record> 
+</div>
+<!-- error-->
+<!-- <div class="container rounded w-75 mt-5" *ngIf="1 == 2">
+  <app-error></app-error>
+</div> -->
+
+<!-- Favorite table -->
+<!-- <div [@fromLeftToRight]> -->
+<div *ngIf="isReturnList == 1 && isFavorite" [@fromRightToLeft]>
+  <app-favorite (clickToSecondTalbeEvent)="getEventDetail($event, 1)" (clickToReturnSecondTalbeEvent)="clickToReturnSecondTalbeEvent($event)" [choosenEventObjFromList]="choosenEventObjFromList" [isReturnList]="isReturnList" [isSecondTableClicked]="isSecondTableClicked"></app-favorite> 
+</div>
+<!-- </div> -->
+<div *ngIf="isReturnList != 1 && isFavorite">
+  <app-favorite (clickToSecondTalbeEvent)="getEventDetail($event, 1)" (clickToReturnSecondTalbeEvent)="clickToReturnSecondTalbeEvent($event)" [choosenEventObjFromList]="choosenEventObjFromList" [isReturnList]="isReturnList" [isSecondTableClicked]="isSecondTableClicked"></app-favorite> 
+</div>
+
+<!-- first table-->
+<div *ngIf="isReturnList == 0 && isShowFirstTable && refinedeventListJsonObjetAfterSubmit && seconds > 0 && refinedeventListJsonObjetAfterSubmit.length > 0" [@fromRightToLeft]>
+  <app-table [isReturnList]="isReturnList" [eventListArr]="refinedeventListJsonObjetAfterSubmit" [isSecondTableClicked]="isSecondTableClicked" [choosenEventObjFromList]="choosenEventObjFromList" [isFavorite]="isFavorite" (clickToSecondTalbeEvent)="getEventDetail($event, 0)" (clickToReturnSecondTalbeEvent)="clickToReturnSecondTalbeEvent($event)"></app-table> 
+</div>
+<div *ngIf="isReturnList != 0 && isShowFirstTable && refinedeventListJsonObjetAfterSubmit && seconds > 0 && refinedeventListJsonObjetAfterSubmit.length > 0">
+  <app-table [isReturnList]="isReturnList" [eventListArr]="refinedeventListJsonObjetAfterSubmit" [isSecondTableClicked]="isSecondTableClicked" [choosenEventObjFromList]="choosenEventObjFromList" [isFavorite]="isFavorite" (clickToSecondTalbeEvent)="getEventDetail($event, 0)" (clickToReturnSecondTalbeEvent)="clickToReturnSecondTalbeEvent($event)"></app-table> 
+</div>
+
+
+<div *ngIf="isShowSecondTable && eventDetailObject" [@fromLeftToRight]>
+  <!-- second table-->
+  <app-second-table [eventDetailObject]="eventDetailObject" [artTeamObj] = "artTeamObj" [upComingEventsObj]="upComingEventsObj" [venueObj]="venueObj" [choosenEventObjFromList]="choosenEventObjFromList" [seconds]="seconds" (clickToReturnListEvent)="returnList($event)"></app-second-table>
+</div>

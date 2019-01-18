@@ -1,0 +1,102 @@
+
+	<div class="container rounded  d-flex justify-content-end mt-2">
+		<button type="button" class="border rounded btn btn-light" (click)="clickToReturnSecondTalbe()" [disabled]="!isSecondTableClicked || isReturnList != 0">Details ></button>
+	</div>
+	<table *ngIf="!isFavorite" class="table table-hover mt-1"> 
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Date</th>
+				<th>Event</th>
+				<th>Category</th>
+				<th>Venue Info</th>
+				<th>Favorite</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr *ngFor="let rowArrObj of eventListArr; let i = index;"> 
+				<td *ngIf="isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161);" class="text-left"><b>{{i + 1}}</b></td>
+				<td *ngIf="!(isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left"><b>{{i + 1}}</b></td>
+
+				<td *ngIf="isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161)" class="text-left">{{rowArrObj['date']}}</td>
+				<td *ngIf="!(isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left">{{rowArrObj['date']}}</td>
+
+				<td *ngIf="isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161)" class="text-left"><a matTooltip="{{rowArrObj['eventName']}}" tooltip-placement="bottom" href="javascript:void(0);" (click)="getEventDetail(i)">
+					<span *ngIf="rowArrObj['eventName'].length <= 35">
+							{{rowArrObj['eventName']}}
+					</span>
+					<span *ngIf="rowArrObj['eventName'].length > 35">
+						{{rowArrObj['eventName'].substring(0,34)}}...
+					</span>
+				</a>
+				</td>
+				<td *ngIf="!(isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left"><a matTooltip="{{rowArrObj['eventName']}}" tooltip-placement="bottom" href="javascript:void(0);" (click)="getEventDetail(i)">
+					<span *ngIf="rowArrObj['eventName'].length <= 35">
+							{{rowArrObj['eventName']}}
+					</span>
+					<span *ngIf="rowArrObj['eventName'].length > 35">
+						{{rowArrObj['eventName'].substring(0,34)}}...
+					</span>
+				</a>
+				</td>
+
+				<td *ngIf="isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161)" class="text-left">
+					<span *ngIf="rowArrObj['genre'] && rowArrObj['segment']">
+						{{rowArrObj['genre']}} - {{rowArrObj['segment']}}
+					</span>
+					<span *ngIf="rowArrObj['genre'] && !rowArrObj['segment']">
+						{{rowArrObj['genre']}}
+					</span>
+					<span *ngIf="!rowArrObj['genre'] && rowArrObj['segment']">
+						{{rowArrObj['segment']}}
+					</span>
+					<span *ngIf="!rowArrObj['genre'] && !rowArrObj['segment']">
+						N/A
+					</span>
+				</td>
+				<td *ngIf="!(isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left">
+					<span *ngIf="rowArrObj['genre'] && rowArrObj['segment']">
+						{{rowArrObj['genre']}} - {{rowArrObj['segment']}}
+					</span>
+					<span *ngIf="rowArrObj['genre'] && !rowArrObj['segment']">
+						{{rowArrObj['genre']}}
+					</span>
+					<span *ngIf="!rowArrObj['genre'] && rowArrObj['segment']">
+						{{rowArrObj['segment']}}
+					</span>
+					<span *ngIf="!rowArrObj['genre'] && !rowArrObj['segment']">
+						N/A
+					</span>
+				</td>
+
+
+				<td *ngIf="isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161);" class="text-left">{{rowArrObj['venue']}}</td>
+				<td *ngIf="!(isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left">{{rowArrObj['venue']}}</td>
+
+				<td *ngIf="isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161);" class="text-left">
+        			<button *ngIf="!favoriteListMaps.has(rowArrObj['eventId'])" type="button" class="rounded btn btn-light" (click)="favorite(i)" style="height:38px; width:50px;"> 
+        				<i class="material-icons">star_border</i>
+        			</button>
+
+        			<button *ngIf="favoriteListMaps.has(rowArrObj['eventId'])" type="button" class="rounded btn btn-light" (click)="favorite(i)" style="height:38px; width:50px;"> 
+        				<i class="material-icons" style="color:rgb(245,208,88);">star</i>
+        			</button>
+				</td>
+				<td *ngIf="!(isReturnList == 0 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left">
+        			<button *ngIf="!favoriteListMaps.has(rowArrObj['eventId'])" type="button" class="rounded btn btn-light" (click)="favorite(i)" style="height:38px; width:50px;"> 
+        				<i class="material-icons">star_border</i>
+        			</button>
+
+        			<button *ngIf="favoriteListMaps.has(rowArrObj['eventId'])" type="button" class="rounded btn btn-light" (click)="favorite(i)" style="height:38px; width:50px;"> 
+        				<i class="material-icons" style="color:rgb(245,208,88);">star</i>
+        			</button>
+				</td>
+			</tr>
+	
+		</tbody>
+	</table>
+
+
+
+

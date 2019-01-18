@@ -1,0 +1,71 @@
+<div class="container text-center mt-2" ><b> {{ eventDetailObject[0]['eventName'] }} </b></div>
+
+<div class="container mb-2">
+  <div class="d-flex" style="height:38px">
+  	<button type="button" class="rounded btn btn-light mr-auto" (click)="returnList()">< List </button>
+    
+    <div class="btn-group d-flex" role="group">
+        <a class="twitter-share-button mr-1" href="https://twitter.com/intent/tweet?text=Check out {{eventDetailObject[0]['eventName']}} at {{eventDetailObject[0]['Venue']['venueObj']}}. Website:{{eventDetailObject[0]['Buy Ticket At']['buyTicketAtObject']}} %23CSCI571EventSearch" data-size="large">
+          <img border="0" alt="twitter" src="http://csci571.com/hw/hw8/Images/Twitter.png" style="height:38px">
+        </a>
+        <button *ngIf="!favoriteListMaps.has(choosenEventObjFromList['eventId'])" type="button" class="rounded btn btn-light" (click)="favorite()" style="height:38px; width:50px;"><i class="material-icons">star_border</i></button>
+        <button *ngIf="favoriteListMaps.has(choosenEventObjFromList['eventId'])" type="button" class="rounded btn btn-light" (click)="favorite()" style="height:38px; width:50px;"><i class="material-icons" style="color:rgb(245,208,88)">star</i></button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<nav>
+  <div class="row nav nav-tabs justify-content-end" id="nav-tab1" role="tablist">
+
+    <a class="col-xs-1 nav-item nav-link active" data-toggle="tab" href="#nav-home" (click)="changeTabIndex(0)">Event</a>
+<!--     <a class="col-xs-1 nav-item nav-link active" data-toggle="tab" href="#nav-home" (click)="changeTabIndex(0)">Event</a> -->
+
+    <a class="col-xs-1 nav-item nav-link" data-toggle="tab" href="#nav-profile" (click)="changeTabIndex(1)">Artist/Teams</a>
+<!--     <a class="col-xs-1 nav-item nav-link" data-toggle="tab" href="#nav-profile" (click)="changeTabIndex(1)">Artist</a> -->
+
+    <a class="col-xs-1 nav-item nav-link" data-toggle="tab" href="#nav-profile" (click)="changeTabIndex(2)">Venue</a>
+<!--     <a class="col-xs-1 nav-item nav-link" data-toggle="tab" href="#nav-profile" (click)="changeTabIndex(2)">Venue</a> -->
+
+    <a class="col-xs-1 nav-item nav-link" data-toggle="tab" href="#nav-profile" (click)="changeTabIndex(3)">Upcoming Events</a>
+ <!--    <a class="col-xs-1 nav-item nav-link" data-toggle="tab" href="#nav-profile" (click)="changeTabIndex(3)">Upcoming</a> -->
+
+  </div>
+
+    <div class="row nav nav-tabs justify-content-end" id="nav-tab2" role="tablist">
+
+ 
+    <a class="col-xs-1 nav-item nav-link active" data-toggle="tab" href="#nav-home" (click)="changeTabIndex(0)"><span style="font-size: 12px">Event</span></a>
+
+
+    <a class="col-xs-1 nav-item nav-link" data-toggle="tab" href="#nav-profile" (click)="changeTabIndex(1)"><span style="font-size: 12px">Artist</span></a>
+
+    <a class="col-xs-1 nav-item nav-link" data-toggle="tab" href="#nav-profile" (click)="changeTabIndex(2)"><span style="font-size: 12px">Venue</span></a>
+
+    <a class="col-xs-1 nav-item nav-link" data-toggle="tab" href="#nav-profile" (click)="changeTabIndex(3)"><span style="font-size: 12px">Upcoming</span></a>
+
+  </div>
+</nav>
+</div>
+
+<div *ngIf="seconds == 0" class="container">
+  <app-progress-bar></app-progress-bar>
+</div>
+
+<div *ngIf="tabIndex == 0 && seconds > 0" class="container">
+  <app-event  *ngIf="eventDetailObject && eventDetailObject.length > 0" [eventDetailObject]="eventDetailObject"></app-event>
+  <app-no-record  *ngIf="eventDetailObject && eventDetailObject.length == 0"></app-no-record>
+</div>
+<div *ngIf="tabIndex == 1 && seconds > 0" class="container">
+  <app-artist-teams *ngIf="artTeamObj && artTeamObj.length > 0" [artTeamObj] = "artTeamObj"></app-artist-teams>
+  <app-no-record *ngIf="artTeamObj && artTeamObj.length == 0"></app-no-record>
+</div>
+<div *ngIf="tabIndex == 2 && seconds > 0" class="container">
+  <app-venue *ngIf="venueObj && venueObj.length > 0" [venueObj]="venueObj"></app-venue>
+  <app-no-record *ngIf="venueObj && venueObj.length == 0"></app-no-record>
+</div>
+
+<div *ngIf="tabIndex == 3 && seconds > 0" class="container">
+  <app-upcoming-events *ngIf="upComingEventsObj && upComingEventsObj.length > 0" [upComingEventsObj]="upComingEventsObj"></app-upcoming-events>
+  <app-no-record *ngIf="upComingEventsObj && upComingEventsObj.length == 0"></app-no-record>
+</div>

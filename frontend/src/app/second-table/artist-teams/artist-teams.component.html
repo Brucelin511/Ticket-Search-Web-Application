@@ -1,0 +1,46 @@
+
+<div *ngFor = "let singleElement of artTeamObj" class="table-responsive-sm">
+  <table class="table table-striped" *ngIf="singleElement['table']">
+    <tbody>
+      <tr>
+        <th scope="row">Name</th>
+        <td>{{singleElement['table']['name']}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Followers</th>
+        <td>{{singleElement['table']['followers'] | number}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Popularity</th>
+<!--         <td>{{singleElement['table']['popularity']}}</td> -->
+        <td > 
+          <div class="container">
+            <div class="centered" style="position:absolute; left:50%">
+              <round-progress [current]="singleElement.table.popularity" [max]="100" [clockwise]="false" [color]="'rgb(133,180,59)'" [radius]="20" [stroke]="3">
+              </round-progress>
+            </div>
+            <div class="centered" style="position:absolute; left:51%;">{{singleElement['table']['popularity']}}</div>
+          </div>
+        </td>
+<!--         <td>{{singleElement['table']['popularity']}}</td> -->
+      </tr>
+      <tr>
+        <th scope="row">Check At</th>
+        <td><a href="{{singleElement['table']['checkAt']}}" target="_blank">Spotify</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+<!--   <round-progress [current]="90" [max]="100" [clockwise]="false"></round-progress> -->
+  <div class="container" *ngIf="singleElement['picture']">
+      <div class="text-center"><b>{{singleElement['picture']['name']}}</b></div>
+      <div class="row imagetiles">
+          <div *ngFor="let element of singleElement['picture']['url'];" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <a [href]="element" target="_blank">
+              <img [src]="element" class="img-responsive">
+            </a>
+          </div>
+      </div>
+  </div>
+</div>
+

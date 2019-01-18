@@ -1,0 +1,105 @@
+<div *ngIf="eventListArr.length>0" class="container mt-2">
+
+	<div class="container rounded d-flex justify-content-end">
+		<button type="button" class="border rounded btn btn-light" (click)="clickToReturnSecondTalbe()" [disabled]="!isSecondTableClicked  || isReturnList != 1">Details ></button>
+	</div>
+
+	<table class="table table-hover mt-1"> 
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Date</th>
+				<th>Event</th>
+				<th>Category</th>
+				<th>Venue Info</th>
+				<th>Favorite</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let rowArrObj of eventListArr; let i = index;"> 
+				<td *ngIf="isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161)" class="text-left"><b>{{i + 1}}</b></td>
+				<td *ngIf="!(isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left"><b>{{i + 1}}</b></td>
+
+				<td *ngIf="isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161)" class="text-left">{{rowArrObj['date']}}</td>
+				<td *ngIf="!(isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left">{{rowArrObj['date']}}</td>
+
+				<td *ngIf="isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161)" class="text-left"><a matTooltip="teststetse" tooltip-placement="bottom" href="javascript:void(0);" (click)="getEventDetail(i)">
+					<span *ngIf="rowArrObj['eventName'].length <= 35">
+							{{rowArrObj['eventName']}}
+					</span>
+					<span *ngIf="rowArrObj['eventName'].length > 35">
+						{{rowArrObj['eventName'].substring(0,34)}}...
+					</span>
+				</a></td>
+				<td *ngIf="!(isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left"><a matTooltip="teststetse" tooltip-placement="bottom" href="javascript:void(0);" (click)="getEventDetail(i)">
+					<span *ngIf="rowArrObj['eventName'].length <= 35">
+							{{rowArrObj['eventName']}}
+					</span>
+					<span *ngIf="rowArrObj['eventName'].length > 35">
+						{{rowArrObj['eventName'].substring(0,34)}}...
+					</span>
+				</a></td>
+
+
+
+<!-- 				<td *ngIf="isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161)" class="text-left">
+					<span *ngIf="rowArrObj['genre'] && rowArrObj['segment']">
+						{{rowArrObj['genre']}} - {{rowArrObj['segment']}}
+					</span>
+					<span *ngIf="rowArrObj['genre'] && !rowArrObj['segment']">
+						{{rowArrObj['genre']}}
+					</span>
+					<span *ngIf="!rowArrObj['genre'] && rowArrObj['segment']">
+						{{rowArrObj['segment']}}
+					</span>
+					<span *ngIf="!rowArrObj['genre'] && !rowArrObj['segment']">
+						N/A
+					</span>
+				</td> -->
+
+				<td *ngIf="isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161)" class="text-left">
+					<span *ngIf="rowArrObj['genre'] && rowArrObj['segment']">
+						{{rowArrObj['genre']}} - {{rowArrObj['segment']}}
+					</span>
+					<span *ngIf="rowArrObj['genre'] && !rowArrObj['segment']">
+						{{rowArrObj['genre']}}
+					</span>
+					<span *ngIf="!rowArrObj['genre'] && rowArrObj['segment']">
+						{{rowArrObj['segment']}}
+					</span>
+					<span *ngIf="!rowArrObj['genre'] && !rowArrObj['segment']">
+						N/A
+					</span>
+				</td>
+				<td *ngIf="!(isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left">
+					<span *ngIf="rowArrObj['genre'] && rowArrObj['segment']">
+						{{rowArrObj['genre']}} - {{rowArrObj['segment']}}
+					</span>
+					<span *ngIf="rowArrObj['genre'] && !rowArrObj['segment']">
+						{{rowArrObj['genre']}}
+					</span>
+					<span *ngIf="!rowArrObj['genre'] && rowArrObj['segment']">
+						{{rowArrObj['segment']}}
+					</span>
+					<span *ngIf="!rowArrObj['genre'] && !rowArrObj['segment']">
+						N/A
+					</span>
+				</td>
+
+				<td *ngIf="isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161)" class="text-left">{{rowArrObj['venue']}}</td>
+				<td *ngIf="!(isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left">{{rowArrObj['venue']}}</td>
+
+				<td *ngIf="isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId']" style="background-color: rgb(247,221,161)" class="text-left">
+					<i class="material-icons border rounded px-2 py-1" (click)="delete(rowArrObj['eventId'])">delete</i>
+				</td>
+				<td *ngIf="!(isReturnList == 1 && choosenEventObjFromList && choosenEventObjFromList['eventId'] == rowArrObj['eventId'])" class="text-left">
+					<i class="material-icons border rounded px-2 py-1" (click)="delete(rowArrObj['eventId'])">delete</i>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div *ngIf="eventListArr.length==0" class="container mt-3 px-0">
+<app-no-record></app-no-record>
+</div>
